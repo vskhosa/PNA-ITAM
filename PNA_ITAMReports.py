@@ -7,8 +7,11 @@ import datetime
 fname = '01_HardwareInventoryRAW.csv'
 fname2 = '02_SoftwareInventoryRAW.csv'
 
-df=pd.read_csv(fname,encoding='ISO-8859-1',converters={'COMPANYID': lambda x: str(x)})
-df2=pd.read_csv(fname2,encoding='ISO-8859-1')
+df=pd.read_csv(fname,encoding='UTF-8-sig',converters={'COMPANYID': lambda x: str(x)})
+df2=pd.read_csv(fname2,encoding='UTF-8-sig')
+
+print(df.columns)
+print(df2.columns)
 
 #Renaming columns from the report
 df.rename(columns = {'computer_name':'DEVICE_ID', 'organization_name':'ORGANIZATION', 'OWNER':'PERSON', 'operating_system':'OS', 'service_pack':'OS_LEVEL', 'family':'CPU', 'clock_speed':'CPU_SPEED', 'bios_version':'BIOS', 'total_physical_memory_mb':'MEMORY', 'ip_address':'IPADDR', 'ip_subnet':'SUBNETMASK', 'mac_address':'MACADDR', 'total_capacity':'SYSDRV_TOTAL', 'free_space':'SYSDRV_FREE', 'owner_email_id':'OWNERID', 'domain_name':'DOMAIN', 'manufacturer':'WMANUFACTURER', 'device_model':'WMODEL', 'no_of_processors':'WNUMBEROFPROCESSORS', 'servicetag':'SERIAL_NUMBER', 'system_type':'HWARCHITECTURE', 'build_number':'OS_BUILDNO', 'LAST_SUCCESSFUL_SCAN':'LASTCONNECTDATE'}, inplace=True)
@@ -42,6 +45,7 @@ df.insert(48,'ADMINISTRATORID','')
 df.insert(49,'INSTALLATIONBUILDING','')
 df.insert(50,'FIXEDASSETNUMBER','')
 
+
 #Populating DEVICENAME and FIXEDASSETNUMBER
 df['DEVICENAME'] = df['DEVICE_ID']
 df['FIXEDASSETNUMBER'] = df['DEVICE_ID']
@@ -74,9 +78,11 @@ df['LASTCONNECTDATE'] = pd.to_datetime(df['LASTCONNECTDATE']).dt.strftime('%Y/%m
 
 print(df.columns)
 
-df2.rename(columns = {'ORGANIZATION':'COMPANY', 'Last Logon User':'USER_LOGIN_NAME', 'Computer Name':'PCID', 'Software Name':'SOFTWARE_NAME', 'Software Version':'SOFTWARE_VERSION', 'Installed Location':'SOFTWARE_PATH', 'Software Manufacturer':'SOFTWARE_VENDOR', 'Last Asset Scan Time':'SCAN_DATE'}, inplace=True)
+df2.rename(columns = {'ORGANIZATION':'COMPANY', 'Last_Logon_User1':'USER_LOGIN_NAME', 'Computer_Name':'PCID', 'Software_Name':'SOFTWARE_NAME', 'Software_Version':'SOFTWARE_VERSION', 'Installed_Location':'SOFTWARE_PATH', 'Software_Manufacturer':'SOFTWARE_VENDOR', 'Last_Asset_Scan_Time':'SCAN_DATE'}, inplace=True)
 df2.insert(1,'PC_SITECODE','')
 df2.insert(4,'PC_NAME','')
+
+print(df2.columns)
 
 #Populating PC_NAME
 df2['PC_NAME'] = df2['PCID']

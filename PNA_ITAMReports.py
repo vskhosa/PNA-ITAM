@@ -1,8 +1,16 @@
-#! usr/bin/env python3
+print("##########################################################################################\n\n")
+print("                                  PNA ITAM Script                                      ")
+print("                   written by: Vikram Khosa (Panasonic Canada Inc)                     \n")
+print("Description - The script takes raw ITAM reports from SQL server as input and formats them")
+print("according to the requirements provided by Japan ITAM team.")
+print("\n\n##########################################################################################\n")
+print("Please wait for the script to finish......")
 
 import csv
 import pandas as pd
 import datetime
+pd.options.mode.chained_assignment = None
+
 
 fname = '01_HardwareInventoryRAW.csv'
 fname2 = '02_SoftwareInventoryRAW.csv'
@@ -73,7 +81,7 @@ df['OS_BUILDNO'] = df['OS_BUILDNO'].str.split('.').str[0]
 #Changing date format
 df['LASTCONNECTDATE'] = pd.to_datetime(df['LASTCONNECTDATE']).dt.strftime('%Y/%m/%d %H:%M:%S')
 
-print(df.columns)
+#print(df.columns)
 
 df2.rename(columns = {'ORGANIZATION':'COMPANY', 'Last_Logon_User1':'USER_LOGIN_NAME', 'Computer_Name':'PCID', 'Software_Name':'SOFTWARE_NAME', 'Software_Version':'SOFTWARE_VERSION', 'Installed_Location':'SOFTWARE_PATH', 'Software_Manufacturer':'SOFTWARE_VENDOR', 'Last_Asset_Scan_Time':'SCAN_DATE'}, inplace=True)
 df2.insert(1,'PC_SITECODE','')
@@ -92,12 +100,12 @@ df2['SCAN_DATE'] = pd.to_datetime(df2['SCAN_DATE']).dt.strftime('%Y/%m/%d %H:%M:
 #Removing devices from HardwareInventory that are not in SoftwareInventory and storing in new dataframe
 df1 = df[df['DEVICE_ID'].isin(df2['PCID'])]
 
-print(df2.columns)
+# print(df2.columns)
 df2.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
 
 #Writing to csv and using line_terminator to convert CRLF to LF
-df1.to_csv('01_HardwareInventoryPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
-df2.to_csv('02_SoftwareInventoryPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2
+df1.to_csv('HVUD140RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1(Regional Hardware Inventory Information)
+df2.to_csv('HVUD141RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2(Regional Software Inventory Information)
 
 
 
@@ -192,6 +200,8 @@ df33.drop(['SOFT_NAME','SOFT_VERSION'], axis=1, inplace=True)
 
 df33.sort_values('PC_NO', inplace=True) #Sorting csv file by PC_NO
 
-df44.to_csv('04_AntiVirusPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n')
-df33.to_csv('03_RegionallyUsedSoftwarePNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3
-df5.to_csv('04_RegionalSoftwareLicensePNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
+# df44.to_csv('04_AntiVirusPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Not required to print
+df33.to_csv('HVUD142RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3(Regional Software Inventory Information)
+df5.to_csv('HVUD143RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4(Regional Software License Information)
+
+print("Reports Generated Successfully!!")

@@ -105,9 +105,9 @@ df1 = df[df['DEVICE_ID'].isin(df2['PCID'])]
 # print(df2.columns)
 df2.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
 
-#Writing to csv and using line_terminator to convert CRLF to LF
-df1.to_csv('HVUD140RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1(Regional Hardware Inventory Information)
-df2.to_csv('HVUD141RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2(Regional Software Inventory Information)
+##Writing to csv and using line_terminator to convert CRLF to LF
+#df1.to_csv('HVUD140RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1(Regional Hardware Inventory Information)
+#df2.to_csv('HVUD141RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2(Regional Software Inventory Information)
 
 
 
@@ -202,9 +202,9 @@ df33.drop(['SOFT_NAME','SOFT_VERSION'], axis=1, inplace=True)
 
 df33.sort_values('PC_NO', inplace=True) #Sorting csv file by PC_NO
 
-# df44.to_csv('04_AntiVirusPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Not required to print
-df33.to_csv('HVUD142RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3(Regional Software Inventory Information)
-df5.to_csv('HVUD143RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4(Regional Software License Information)
+## df44.to_csv('04_AntiVirusPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Not required to print
+#df33.to_csv('HVUD142RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3(Regional Software Inventory Information)
+#df5.to_csv('HVUD143RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4(Regional Software License Information)
 
 
 #####################################################################
@@ -306,9 +306,9 @@ df1pci = dfpci[dfpci['DEVICE_ID'].isin(df2pci['PCID'])]
 #print(df2pci.columns)
 df2pci.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
 
-#Writing to csv and using line_terminator to convert CRLF to LF
-df1pci.to_csv('HVUD140RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
-df2pci.to_csv('HVUD141RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2
+##Writing to csv and using line_terminator to convert CRLF to LF
+#df1pci.to_csv('HVUD140RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
+#df2pci.to_csv('HVUD141RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2
 
 
 
@@ -403,9 +403,9 @@ df33pci.drop(['SOFT_NAME','SOFT_VERSION'], axis=1, inplace=True)
 
 df33pci.sort_values('PC_NO', inplace=True) #Sorting csv file by PC_NO
 
-#df44pci.to_csv('04_AntiVirusPCI.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n')
-df33pci.to_csv('HVUD142RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3
-df5pci.to_csv('HVUD143RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
+##df44pci.to_csv('04_AntiVirusPCI.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n')
+#df33pci.to_csv('HVUD142RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3
+#df5pci.to_csv('HVUD143RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
 
 df1_combined = pd.concat([df1,df1pci])
 df2_combined = pd.concat([df2,df2pci])

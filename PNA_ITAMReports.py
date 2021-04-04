@@ -1,12 +1,12 @@
 #! /usr/bin/env python3
 
 print("##########################################################################################\n\n")
-print("                                  PNA ITAM Script                                      ")
+print("                                      ITAM Script                                      ")
 print("                   written by: Vikram Khosa (Panasonic Canada Inc)                     \n")
-print("Description - The script takes raw ITAM reports from SQL server as input and formats them")
-print("according to the requirements provided by Japan ITAM team.")
+print("Description - The script takes raw ITAM reports from PNA (SQL) and PCI (Desktop Central) ")
+print("as input and formats them according to the requirements provided by Japan ITAM team.")
 print("\n\n##########################################################################################\n")
-print("Please wait for the script to finish......")
+print("Formatting PNA ITAM data......")
 
 import csv
 import pandas as pd
@@ -106,8 +106,8 @@ df1 = df[df['DEVICE_ID'].isin(df2['PCID'])]
 df2.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
 
 #Writing to csv and using line_terminator to convert CRLF to LF
-df1.to_csv('HVUD140RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1(Regional Hardware Inventory Information)
-df2.to_csv('HVUD141RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2(Regional Software Inventory Information)
+df1.to_csv('HVUD140RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1(Regional Hardware Inventory Information)
+df2.to_csv('HVUD141RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2(Regional Software Inventory Information)
 
 
 
@@ -203,22 +203,15 @@ df33.drop(['SOFT_NAME','SOFT_VERSION'], axis=1, inplace=True)
 df33.sort_values('PC_NO', inplace=True) #Sorting csv file by PC_NO
 
 # df44.to_csv('04_AntiVirusPNA.csv',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Not required to print
-df33.to_csv('HVUD142RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3(Regional Software Inventory Information)
-df5.to_csv('HVUD143RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4(Regional Software License Information)
+df33.to_csv('HVUD142RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3(Regional Software Inventory Information)
+df5.to_csv('HVUD143RZZ_PNA',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4(Regional Software License Information)
 
-print("Reports Generated Successfully!!")
 
 #####################################################################
 #################### Running PCI ITAM Script ########################
 #####################################################################
 
-print("##########################################################################################\n\n")
-print("                                  PCI ITAM Script                                      ")
-print("                               written by: Vikram Khosa                                \n")
-print("Description - The script takes raw ITAM reports from Desktop Central as input and formats")
-print("them according to the requirements provided by Japan ITAM team.")
-print("\n\n##########################################################################################\n")
-print("Please wait for the script to finish.....")
+print("Formatting PCI ITAM data.....")
 
 
 fname = '01_HardwareInventoryPCIRAW.csv'
@@ -419,9 +412,9 @@ df2_combined = pd.concat([df2,df2pci])
 df33_combined = pd.concat([df33,df33pci])
 df5_combined = pd.concat([df5,df5pci])
 
-df1_combined.to_csv('HVUD140RZZ_Combined',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
-df2_combined.to_csv('HVUD141RZZ_Combined',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2
-df33_combined.to_csv('HVUD142RZZ_Combined',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3
-df5_combined.to_csv('HVUD143RZZ_Combined',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
+df1_combined.to_csv('HVUD140RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
+df2_combined.to_csv('HVUD141RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2
+df33_combined.to_csv('HVUD142RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 3
+df5_combined.to_csv('HVUD143RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
 
 print("Reports Generated Successfully!!")

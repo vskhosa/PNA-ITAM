@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['PNA_ITAMReports.py'],
-             pathex=['C:\\Users\\vkhosa\\Desktop\\Python\\PNA ITAM - Copy'],
+             pathex=['C:\\Users\\vkhosa\\Desktop\\Python\\PNA-ITAM'],
              binaries=[],
              datas=[],
              hiddenimports=[],

@@ -83,6 +83,12 @@ df['OS_BUILDNO'] = df['OS_BUILDNO'].str.split('.').str[0]
 #Changing date format
 df['LASTCONNECTDATE'] = pd.to_datetime(df['LASTCONNECTDATE']).dt.strftime('%Y/%m/%d %H:%M:%S')
 
+#Add the CompanyID to PASA Report 1              00039010
+company_id = '00039010'
+company_id = str(company_id)
+company_id = company_id.zfill(8)
+df.COMPANYID = company_id
+
 #print(df.columns)
 
 df2.rename(columns = {'ORGANIZATION':'COMPANY', 'Last_Logon_User1':'USER_LOGIN_NAME', 'Computer_Name':'PCID', 'Software_Name':'SOFTWARE_NAME', 'Software_Version':'SOFTWARE_VERSION', 'Installed_Location':'SOFTWARE_PATH', 'Software_Manufacturer':'SOFTWARE_VENDOR', 'Last_Asset_Scan_Time':'SCAN_DATE'}, inplace=True)
@@ -412,6 +418,41 @@ df1_combined = pd.concat([df1,df1pci])
 df2_combined = pd.concat([df2,df22pci])
 df33_combined = pd.concat([df33,df33pci])
 df5_combined = pd.concat([df5,df5pci])
+
+#Report 1 Modifications ##################################################
+#Remove DEVICE_ID Column
+del df1_combined['DEVICE_ID']
+
+#Rename ResourceID to DEVICE_ID
+df1_combined.rename(columns = {'ResourceID':'DEVICE_ID'}, inplace=True)
+###########################################################################
+
+#Report 2 Modifications ##################################################
+#Remove DEVICE_ID Column
+del df2_combined['PCID']
+
+#Rename ResourceID to PCID
+df2_combined.rename(columns = {'ResourceID':'PCID'}, inplace=True)
+###########################################################################
+
+#Report 3 Modifications ##################################################
+#Rename ResourceID to PC_NO
+df33_combined.rename(columns = {'ResourceID':'PC_NO'}, inplace=True)
+
+#Rename PC_NO to Computer_Name
+df33_combined.rename(columns = {'PC_NO':'Computer_Name'}, inplace=True)
+
+#Remove PRODUCT_ID Column
+del df33_combined['PRODUCT_ID']
+###########################################################################
+
+#Report 4 Modifications ##################################################
+#Remove ResourceID Column
+del df5_combined['ResourceID']
+
+#Arrange the columns to comply with standard layout
+df5_combined = df5_combined[['SOFT_CODE', 'SOFT_NAME', 'POLICY_CLASS', 'SOFT_VERSION', 'UPDATE_DATE']]
+###########################################################################
 
 df1_combined.to_csv('HVUD140RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
 df2_combined.to_csv('HVUD141RZZ',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 2

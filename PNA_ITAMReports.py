@@ -300,11 +300,12 @@ df2pci = df2pci.dropna(axis=0, subset=['SOFTWARE_NAME'])
 #Changing date format
 df2pci['SCAN_DATE'] = pd.to_datetime(df2pci['SCAN_DATE']).dt.strftime('%Y/%m/%d %H:%M:%S')
 
-#Removing devices from HardwareInventory that are not in SoftwareInventory and storing in new dataframe
+#Removing devices from HardwareInventory that are not in SoftwareInventory and vice versa and storing in new dataframe
 df1pci = dfpci[dfpci['DEVICE_ID'].isin(df2pci['PCID'])]
+df22pci = df2pci[df2pci['PCID'].isin(df1pci['DEVICE_ID'])]
 
 #print(df2pci.columns)
-df2pci.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
+df22pci.sort_values('PCID', inplace=True) #Sorting csv file by PCID values
 
 ##Writing to csv and using line_terminator to convert CRLF to LF
 #df1pci.to_csv('HVUD140RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 1
@@ -326,8 +327,8 @@ df4pci.rename(columns = {'Computer Name':'PC_NO', 'Software Name':'SOFT_NAME', '
 
 
 #Removing devices that are not in SoftwareInventory and storing in new dataframe
-df33pci = df3pci[df3pci['PC_NO'].isin(df2pci['PCID'])]
-df44pci = df4pci[df4pci['PC_NO'].isin(df2pci['PCID'])]
+df33pci = df3pci[df3pci['PC_NO'].isin(df22pci['PCID'])]
+df44pci = df4pci[df4pci['PC_NO'].isin(df22pci['PCID'])]
 
 df44pci.insert(1, 'SOFT_CODE', '')
 
@@ -408,7 +409,7 @@ df33pci.sort_values('PC_NO', inplace=True) #Sorting csv file by PC_NO
 #df5pci.to_csv('HVUD143RZZ_PCI',index=False,quoting=csv.QUOTE_ALL,line_terminator='\n') #Saving report 4
 
 df1_combined = pd.concat([df1,df1pci])
-df2_combined = pd.concat([df2,df2pci])
+df2_combined = pd.concat([df2,df22pci])
 df33_combined = pd.concat([df33,df33pci])
 df5_combined = pd.concat([df5,df5pci])
 
